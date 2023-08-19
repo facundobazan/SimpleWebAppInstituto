@@ -14,12 +14,13 @@
         </properties>
     </persistence-unit>
     <!--H2-->
-    <persistence-unit name="H2" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="h2" transaction-type="RESOURCE_LOCAL">
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="org.h2.Driver"/>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:mem:bdfinal"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:~/final"/>
             <property name="jakarta.persistence.jdbc.user" value="sa"/>
-            <property name="jakarta.persistence.jdbc.password" value=""/>
+            <property name="jakarta.persistence.jdbc.password" value="root"/>
+            <property name="hibernate.connection.autocommit" value="false"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>

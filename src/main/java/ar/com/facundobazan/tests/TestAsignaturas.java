@@ -14,7 +14,7 @@ public class TestAsignaturas {
         Profesor profesor = new Profesor(1, "Facundo", "Bazán", "3813535730");
         Asignatura asignatura = new Asignatura(profesor, "Matemáticas");
 
-        EntityManager em = JPAUtils.getEntity();
+        var em = JPAUtils.getEntity();
         AsignaturaDAO asignaturaDAO = new AsignaturaDAO(em);
         ProfesorDAO profesorDAO = new ProfesorDAO(em);
 
