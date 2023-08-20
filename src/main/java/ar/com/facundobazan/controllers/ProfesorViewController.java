@@ -11,42 +11,23 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet(
-        name = "profesores",
-        urlPatterns = {"/profesores"}
+        name = "profesor",
+        urlPatterns = {"/profesores/profesor"}
 )
-public class ProfesorController extends HttpServlet {
+public class ProfesorViewController extends HttpServlet {
 
     ProfesorDAO profesorDAO = new ProfesorDAO(JPAUtils.getEntity());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        List<Profesor> profesores = profesorDAO.getAll();
+        int id = Integer.parseInt(req.getParameter("id"));
+        Profesor profesor = profesorDAO.getById(id);
         HttpSession session = req.getSession();
-        session.setAttribute("profesores", profesores);
-        resp.sendRedirect("profesores/lista.jsp");
-        /*try {
-
-            int id = Integer.parseInt(req.getParameter("id"));
-            Profesor profesor = profesorDAO.getById(id);
-            //for (Asignatura a : profesor.getAsignaturas()) System.out.println(a);
-
-            if (profesor == null) {
-
-                resp.sendError(400, "Objeto no encontrado");
-                return;
-            }
-
-            HttpSession session = req.getSession();
-            resp.sendRedirect("/profesores/profesor.jsp");
-            session.setAttribute("profesor", profesor);
-        } catch (NumberFormatException e) {
-
-            resp.sendError(400, "Parametro de busqueda erroneo");
-        }*/
+        resp.sendRedirect("/profesores/profesor.jsp");
+        session.setAttribute("profesor", profesor);
     }
 
     @Override
