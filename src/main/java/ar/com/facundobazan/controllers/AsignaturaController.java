@@ -2,6 +2,7 @@ package ar.com.facundobazan.controllers;
 
 import ar.com.facundobazan.dao.AsignaturaDAO;
 import ar.com.facundobazan.models.Asignatura;
+import ar.com.facundobazan.models.Profesor;
 import ar.com.facundobazan.utils.JPAUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,9 +12,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(
-        name = "asignatura",
+        name = "asignaturas",
         urlPatterns = {"/asignaturas"}
 )
 public class AsignaturaController extends HttpServlet {
@@ -23,36 +25,48 @@ public class AsignaturaController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        try {
+        String id = req.getParameter("id");
+        String name = req.getParameter("name");
 
-            int id = Integer.parseInt(req.getParameter("id"));
-            Asignatura asignatura = asignaturaDAO.getById(id);
+        if (id != null) {
 
-            if (asignatura == null) {
+            try {
 
-                resp.sendError(400, "Objeto no encontrado");
-                return;
+                Asignatura asignatura = asignaturaDAO.getById(Integer.parseInt(id));
+
+                if (asignatura == null) {
+
+                    resp.sendError(400, "Objeto no encontrado");
+                    return;
+                }
+
+                HttpSession session = req.getSession();
+                resp.sendRedirect("asignaturas/asignatura.jsp");
+                session.setAttribute("asignatura", asignatura);
+            } catch (NumberFormatException e) {
+
+                resp.sendError(400, "Parametro de busqueda erroneo");
             }
 
-            HttpSession session = req.getSession();
-            resp.sendRedirect("asignaturas/asignatura.jsp");
-            session.setAttribute("asignatura", asignatura);
-        } catch (NumberFormatException e) {
+        } else {
 
-            resp.sendError(400, "Parametro de busqueda erroneo");
+            List<Asignatura> asignaturas = asignaturaDAO.findByName(name);
+            HttpSession session = req.getSession();
+            session.setAttribute("asignaturas", asignaturas);
+            resp.sendRedirect("asignaturas/lista.jsp");
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        try {
+        /*try {
 
             Asignatura asignatura = (Asignatura) req.getSession().getAttribute("asignatura");
             asignaturaDAO.create(asignatura);
         }catch (Exception e){
 
             resp.sendError(500, e.getMessage());
-        }
+        }*/
     }
 }

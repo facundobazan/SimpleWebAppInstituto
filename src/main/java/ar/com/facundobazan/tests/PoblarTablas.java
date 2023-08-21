@@ -5,8 +5,13 @@ import ar.com.facundobazan.dao.ProfesorDAO;
 import ar.com.facundobazan.models.Asignatura;
 import ar.com.facundobazan.models.Profesor;
 import ar.com.facundobazan.utils.JPAUtils;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityManager;
 
-public class TestAsignaturas {
+import java.util.ArrayList;
+import java.util.List;
+
+public class PoblarTablas {
 
     public static void main(String[] args) {
 
@@ -21,24 +26,24 @@ public class TestAsignaturas {
         Profesor profesor9 = new Profesor(9, "Ariel", "Aguirre", "+5493814343357");
         Profesor profesor10 = new Profesor(10, "Maximiliano Emilio", "Flores", "+5493813528390");
 
-        Asignatura asignatura1 = new Asignatura(profesor1, "Educación Física");
-        Asignatura asignatura2 = new Asignatura(profesor2, "Inglés");
-        Asignatura asignatura3 = new Asignatura(profesor3, "Matemáticas");
-        Asignatura asignatura4 = new Asignatura(profesor4, "Ciencias Sociales");
-        Asignatura asignatura5 = new Asignatura(profesor5, "Ciencias Naturales");
-        Asignatura asignatura6 = new Asignatura(profesor6, "Francés");
-        Asignatura asignatura7 = new Asignatura(profesor7, "Biología");
-        Asignatura asignatura8 = new Asignatura(profesor8, "Geografía");
-        Asignatura asignatura9 = new Asignatura(profesor9, "Literatura");
-        Asignatura asignatura10 = new Asignatura(profesor10, "Pisicología");
+        profesor1.addAsignatura(new Asignatura(profesor1, "Educación Física"));
+        profesor2.addAsignatura(new Asignatura(profesor2, "Inglés"));
+        profesor3.addAsignatura(new Asignatura(profesor3, "Matemáticas"));
+        profesor4.addAsignatura(new Asignatura(profesor4, "Ciencias Sociales"));
+        profesor5.addAsignatura(new Asignatura(profesor5, "Ciencias Naturales"));
+        profesor6.addAsignatura(new Asignatura(profesor6, "Francés"));
+        profesor7.addAsignatura(new Asignatura(profesor7, "Biología"));
+        profesor8.addAsignatura(new Asignatura(profesor8, "Geografía"));
+        profesor9.addAsignatura(new Asignatura(profesor9, "Literatura"));
+        profesor10.addAsignatura(new Asignatura(profesor10, "Pisicología"));
 
-        var em = JPAUtils.getEntity();
+        EntityManager em = JPAUtils.getEntity();
         AsignaturaDAO asignaturaDAO = new AsignaturaDAO(em);
         ProfesorDAO profesorDAO = new ProfesorDAO(em);
 
         em.getTransaction().begin();
 
-        /*profesorDAO.create(profesor1);
+        profesorDAO.create(profesor1);
         profesorDAO.create(profesor2);
         profesorDAO.create(profesor3);
         profesorDAO.create(profesor4);
@@ -47,10 +52,11 @@ public class TestAsignaturas {
         profesorDAO.create(profesor7);
         profesorDAO.create(profesor8);
         profesorDAO.create(profesor9);
-        profesorDAO.create(profesor10);*/
+        profesorDAO.create(profesor10);
 
-        /*asignaturaDAO.create(new Asignatura(profesorDAO.getById(1), "Educación Física"));
-        asignaturaDAO.create(new Asignatura(profesorDAO.getById(2), "Inglés"));
+        em.flush();
+
+        /*asignaturaDAO.create(new Asignatura(profesorDAO.getById(2), "Inglés"));
         asignaturaDAO.create(new Asignatura(profesorDAO.getById(3), "Matemáticas"));
         asignaturaDAO.create(new Asignatura(profesorDAO.getById(4), "Ciencias Sociales"));
         asignaturaDAO.create(new Asignatura(profesorDAO.getById(5), "Ciencias Naturales"));

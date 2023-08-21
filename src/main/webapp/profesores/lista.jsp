@@ -1,9 +1,11 @@
 <%@page import="ar.com.facundobazan.models.Profesor" %>
-<%@page import="java.util.ArrayList" %>
+<%@page import="ar.com.facundobazan.dao.ProfesorDAO" %>
+<%@page import="ar.com.facundobazan.utils.JPAUtils" %>
+<%@page import="java.util.List" %>
 
 <%@ include file="../share/html-start.jsp" %>
 
-<h1>Profesores</h1>
+<h1 class="text-center mt-3 mb-3">Profesores</h1>
 
 <table class="table table-hover">
 <thead>
@@ -18,17 +20,26 @@
 </thead>
 <tbody>
 
-<% ArrayList<Profesor> profesores= (ArrayList<Profesor>)
-request.getSession().getAttribute("profesores");
-for (Profesor profesor : profesores) { %>
+<%
+
+List<Profesor> profesores = (List<Profesor>) request.getSession().getAttribute("profesores");
+
+if(profesores == null){
+
+    profesores = new ProfesorDAO(JPAUtils.getEntity()).getAll();
+}
+    
+    for (Profesor p : profesores) {
+
+%>
 
 <tr>
-<th scope="row"><%= profesor.getLegajo() %></th>
-<td><%= profesor.getApellido() %>, <%= profesor.getNombre() %></td>
-<td><%= profesor.getTelefono() %></td>
+<th scope="row"><%= p.getLegajo() %></th>
+<td><%= p.getApellido() %>, <%= p.getNombre() %></td>
+<td><%= p.getTelefono() %></td>
 
 <td>
-<a class="bi bi-search text-primary" href="/profesores/profesor?id=<%= profesor.getId_profesor() %>"></a>
+<a class="bi bi-search text-primary" href="/profesores/profesor?id=<%= p.getId_profesor() %>"></a>
 <a class="bi bi-pencil-fill text-warning" href="#"></a>
 <a class="bi bi-x-circle-fill text-danger" href="#"></a>
 </td>

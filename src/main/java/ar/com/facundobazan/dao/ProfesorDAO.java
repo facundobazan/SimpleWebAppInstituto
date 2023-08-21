@@ -2,6 +2,11 @@ package ar.com.facundobazan.dao;
 
 import ar.com.facundobazan.models.Profesor;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 
 import java.util.List;
 
@@ -18,7 +23,7 @@ public class ProfesorDAO implements Crud<Profesor> {
     public int create(Profesor profesor) {
 
         this.MANAGER.persist(profesor);
-        return 0;
+        return profesor.getId_profesor();
     }
 
     @Override
@@ -47,5 +52,17 @@ public class ProfesorDAO implements Crud<Profesor> {
         Profesor profesor = this.MANAGER.find(Profesor.class, id);
         this.MANAGER.remove(profesor);
         return null;
+    }
+
+    public List<Profesor> findByName(String name) {
+
+        String param = "%".concat(name == null ? "" : name).concat("%");
+        CriteriaBuilder builder = this.MANAGER.getCriteriaBuilder();
+        CriteriaQuery<Profesor> query = builder.createQuery(Profesor.class);
+        Root<Profesor> root = query.from(Profesor.class);
+
+        query.select(root).where(builder.or(builder.like(root.get("nombre"), param), builder.like(root.get("apellido"), param)));
+
+        return this.MANAGER.createQuery(query).getResultList();
     }
 }

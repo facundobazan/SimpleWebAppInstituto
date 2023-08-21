@@ -22,7 +22,7 @@ public class Profesor {
     @Column(name = "telefono", length = 14)
     private String telefono;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Asignatura> asignaturas;
 
     public Profesor() {
@@ -45,6 +45,15 @@ public class Profesor {
         this.apellido = apellido;
         this.telefono = telefono;
         this.asignaturas = asignaturas;
+    }
+
+    public Profesor(int legajo, String apellidos, String nombres, String telefono, Asignatura asignatura) {
+
+        this.legajo = legajo;
+        this.apellido = apellidos;
+        this.nombre = nombres;
+        this.telefono = telefono;
+        this.asignaturas.add(asignatura);
     }
 
     public int getId_profesor() {
@@ -105,17 +114,19 @@ public class Profesor {
     }
 
     public List<Asignatura> getAsignaturas() {
-        if (asignaturas == null) asignaturas = new ArrayList<>();
-        return asignaturas;
+
+        return this.asignaturas;
     }
 
     public void setAsignaturas(List<Asignatura> asignaturas) {
 
+        if (this.asignaturas == null) this.asignaturas = new ArrayList<>();
         this.asignaturas = asignaturas;
     }
 
-    public void addAsignaturas(Asignatura asignatura) {
+    public void addAsignatura(Asignatura asignatura) {
 
+        if (this.asignaturas == null) this.asignaturas = new ArrayList<>();
         this.asignaturas.add(asignatura);
     }
 }

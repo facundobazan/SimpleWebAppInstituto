@@ -8,15 +8,20 @@ public class Asignatura {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_categoria;
+    private int id_asignatura;
     @Column(name = "nombre", nullable = false, unique = true, length = 100)
     private String asignatura;
 
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    private Profesor profesor = new Profesor();
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Profesor profesor;
 
     public Asignatura() {
 
+    }
+
+    public Asignatura(String asignatura) {
+
+        this.asignatura = asignatura;
     }
 
     public Asignatura(Profesor profesor, String asignatura) {
@@ -25,14 +30,14 @@ public class Asignatura {
         this.asignatura = asignatura;
     }
 
-    public int getId_categoria() {
+    public int getId_asignatura() {
 
-        return id_categoria;
+        return id_asignatura;
     }
 
-    public void setId_categoria(int id_categoria) {
+    public void setId_asignatura(int id_asignatura) {
 
-        this.id_categoria = id_categoria;
+        this.id_asignatura = id_asignatura;
     }
 
     public String getAsignatura() {
