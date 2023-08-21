@@ -1,17 +1,17 @@
 package ar.com.facundobazan.dao;
 
 import ar.com.facundobazan.models.Profesor;
+import ar.com.facundobazan.utils.JPAUtils;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
 import java.util.List;
 
 public class ProfesorDAO implements Crud<Profesor> {
 
+    EntityManager entityManager = JPAUtils.getEntity();
     private final EntityManager MANAGER;
 
     public ProfesorDAO(EntityManager entityManager) {
@@ -22,8 +22,10 @@ public class ProfesorDAO implements Crud<Profesor> {
     @Override
     public int create(Profesor profesor) {
 
+        this.entityManager.getTransaction().begin();
         this.MANAGER.persist(profesor);
-        return profesor.getId_profesor();
+        this.entityManager.getTransaction().commit();
+        return 0;
     }
 
     @Override

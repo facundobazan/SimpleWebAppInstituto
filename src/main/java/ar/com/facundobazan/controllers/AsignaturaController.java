@@ -2,7 +2,6 @@ package ar.com.facundobazan.controllers;
 
 import ar.com.facundobazan.dao.AsignaturaDAO;
 import ar.com.facundobazan.models.Asignatura;
-import ar.com.facundobazan.models.Profesor;
 import ar.com.facundobazan.utils.JPAUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

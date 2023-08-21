@@ -5,11 +5,7 @@ import ar.com.facundobazan.dao.ProfesorDAO;
 import ar.com.facundobazan.models.Asignatura;
 import ar.com.facundobazan.models.Profesor;
 import ar.com.facundobazan.utils.JPAUtils;
-import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PoblarTablas {
 
@@ -26,7 +22,7 @@ public class PoblarTablas {
         Profesor profesor9 = new Profesor(9, "Ariel", "Aguirre", "+5493814343357");
         Profesor profesor10 = new Profesor(10, "Maximiliano Emilio", "Flores", "+5493813528390");
 
-        profesor1.addAsignatura(new Asignatura(profesor1, "Educación Física"));
+        /*profesor1.addAsignatura(new Asignatura(profesor1, "Educación Física"));
         profesor2.addAsignatura(new Asignatura(profesor2, "Inglés"));
         profesor3.addAsignatura(new Asignatura(profesor3, "Matemáticas"));
         profesor4.addAsignatura(new Asignatura(profesor4, "Ciencias Sociales"));
@@ -36,35 +32,68 @@ public class PoblarTablas {
         profesor8.addAsignatura(new Asignatura(profesor8, "Geografía"));
         profesor9.addAsignatura(new Asignatura(profesor9, "Literatura"));
         profesor10.addAsignatura(new Asignatura(profesor10, "Pisicología"));
-
+*/
         EntityManager em = JPAUtils.getEntity();
         AsignaturaDAO asignaturaDAO = new AsignaturaDAO(em);
         ProfesorDAO profesorDAO = new ProfesorDAO(em);
 
         em.getTransaction().begin();
 
-        profesorDAO.create(profesor1);
-        profesorDAO.create(profesor2);
-        profesorDAO.create(profesor3);
-        profesorDAO.create(profesor4);
-        profesorDAO.create(profesor5);
-        profesorDAO.create(profesor6);
-        profesorDAO.create(profesor7);
-        profesorDAO.create(profesor8);
-        profesorDAO.create(profesor9);
-        profesorDAO.create(profesor10);
+        Asignatura asignatura1 = new Asignatura(profesor1, "Educación Física");
+        Asignatura asignatura2 = new Asignatura(profesor2, "Inglés");
+        Asignatura asignatura3 = new Asignatura(profesor3, "Matemáticas");
+        Asignatura asignatura4 = new Asignatura(profesor4, "Ciencias Sociales");
+        Asignatura asignatura5 = new Asignatura(profesor5, "Ciencias Naturales");
+        Asignatura asignatura6 = new Asignatura(profesor6, "Francés");
+        Asignatura asignatura7 = new Asignatura(profesor7, "Biología");
+        Asignatura asignatura8 = new Asignatura(profesor8, "Geografía");
+        Asignatura asignatura9 = new Asignatura(profesor9, "Literatura");
+        Asignatura asignatura10 = new Asignatura(profesor10, "Pisicología");
+
+        asignaturaDAO.create(asignatura1);
+        asignaturaDAO.create(asignatura2);
+        asignaturaDAO.create(asignatura3);
+        asignaturaDAO.create(asignatura4);
+        asignaturaDAO.create(asignatura5);
+        asignaturaDAO.create(asignatura6);
+        asignaturaDAO.create(asignatura7);
+        asignaturaDAO.create(asignatura8);
+        asignaturaDAO.create(asignatura9);
+        asignaturaDAO.create(asignatura10);
 
         em.flush();
 
-        /*asignaturaDAO.create(new Asignatura(profesorDAO.getById(2), "Inglés"));
-        asignaturaDAO.create(new Asignatura(profesorDAO.getById(3), "Matemáticas"));
-        asignaturaDAO.create(new Asignatura(profesorDAO.getById(4), "Ciencias Sociales"));
-        asignaturaDAO.create(new Asignatura(profesorDAO.getById(5), "Ciencias Naturales"));
-        asignaturaDAO.create(new Asignatura(profesorDAO.getById(6), "Francés"));
-        asignaturaDAO.create(new Asignatura(profesorDAO.getById(7), "Biología"));
-        asignaturaDAO.create(new Asignatura(profesorDAO.getById(8), "Geografía"));
-        asignaturaDAO.create(new Asignatura(profesorDAO.getById(9), "Literatura"));
-        asignaturaDAO.create(new Asignatura(profesorDAO.getById(10), "Pisicología"));*/
+        profesor1.addAsignatura(asignatura1);
+        profesor1.addAsignatura(asignatura3);
+        profesor2.addAsignatura(asignatura2);
+        profesor2.addAsignatura(asignatura5);
+        profesor3.addAsignatura(asignatura3);
+        profesor3.addAsignatura(asignatura4);
+        profesor4.addAsignatura(asignatura4);
+        profesor4.addAsignatura(asignatura1);
+        profesor5.addAsignatura(asignatura5);
+        profesor5.addAsignatura(asignatura8);
+        profesor6.addAsignatura(asignatura6);
+        profesor6.addAsignatura(asignatura9);
+        profesor7.addAsignatura(asignatura7);
+        profesor7.addAsignatura(asignatura10);
+        profesor8.addAsignatura(asignatura8);
+        profesor8.addAsignatura(asignatura5);
+        profesor9.addAsignatura(asignatura9);
+        profesor9.addAsignatura(asignatura2);
+        profesor10.addAsignatura(asignatura10);
+        profesor10.addAsignatura(asignatura7);
+
+        profesorDAO.update(profesor1);
+        profesorDAO.update(profesor2);
+        profesorDAO.update(profesor3);
+        profesorDAO.update(profesor4);
+        profesorDAO.update(profesor5);
+        profesorDAO.update(profesor6);
+        profesorDAO.update(profesor7);
+        profesorDAO.update(profesor8);
+        profesorDAO.update(profesor9);
+        profesorDAO.update(profesor10);
 
         em.getTransaction().commit();
         em.close();

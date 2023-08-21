@@ -12,7 +12,8 @@ public class Asignatura {
     @Column(name = "nombre", nullable = false, unique = true, length = 100)
     private String asignatura;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_profesor")
     private Profesor profesor;
 
     public Asignatura() {

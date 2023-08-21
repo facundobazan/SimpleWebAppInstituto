@@ -2,7 +2,6 @@ package ar.com.facundobazan.controllers;
 
 import ar.com.facundobazan.dao.AsignaturaDAO;
 import ar.com.facundobazan.dao.ProfesorDAO;
-import ar.com.facundobazan.models.Asignatura;
 import ar.com.facundobazan.models.Profesor;
 import ar.com.facundobazan.utils.JPAUtils;
 import jakarta.persistence.EntityManager;
@@ -13,9 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import java.io.FilterOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 @WebServlet(
@@ -25,6 +22,7 @@ import java.util.List;
 public class ProfesorController extends HttpServlet {
 
     ProfesorDAO profesorDAO = new ProfesorDAO(JPAUtils.getEntity());
+    AsignaturaDAO asignaturaDAO = new AsignaturaDAO(JPAUtils.getEntity());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -68,18 +66,22 @@ public class ProfesorController extends HttpServlet {
         String apellidos = req.getParameter("apellidos");
         String nombre = req.getParameter("nombres");
         String telefono = req.getParameter("telefono");
-        String asignatura = req.getParameter("asignatura");
+        //String asignatura = req.getParameter("asignatura");
 
         try {
 
             Profesor profesor = new Profesor();
 
-            profesor.setLegajo(Integer.parseInt(legajo));
+            EntityManager em = JPAUtils.getEntity();
+            em.getTransaction().begin();
+            /*profesor.setLegajo(Integer.parseInt(legajo));
             profesor.setApellido(apellidos);
             profesor.setNombre(nombre);
-            profesor.setTelefono(telefono);
+            profesor.setTelefono(telefono);*/
+            //profesor.addAsignatura(asignaturaDAO.getById(Integer.parseInt(asignatura)));
 
-            JPAUtils.getEntity().merge(profesor);
+            profesorDAO.create(new Profesor(Integer.parseInt(legajo), apellidos, nombre, telefono));
+            JPAUtils.getEntity().getTransaction().commit();
 
             resp.sendRedirect("profesores");
         } catch (Exception e){

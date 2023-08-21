@@ -22,7 +22,7 @@ public class Profesor {
     @Column(name = "telefono", length = 14)
     private String telefono;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "profesor", cascade = CascadeType.ALL)
     private List<Asignatura> asignaturas;
 
     public Profesor() {
