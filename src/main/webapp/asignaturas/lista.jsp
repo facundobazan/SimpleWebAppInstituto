@@ -45,8 +45,11 @@ for (Asignatura a : asignaturas) {
 
 <td>
 <a class="bi bi-search text-primary"href="/asignaturas/asignatura?id=<%= a.getId_asignatura() %>"></a>
-<a class="bi bi-pencil-fill text-warning" href="#"></a>
-<a class="bi bi-x-circle-fill text-danger" href="#"></a>
+<!--<a class="bi bi-pencil-fill text-warning" href="#"></a>-->
+<form class="d-inline" action="/asignatura/del" method="post">
+<input type="hidden" name="id" value="<%= a.getId_asignatura() %>" />
+    <button type="submit" class=""><i class="bi bi-x-circle-fill text-danger"></i></button>
+</form>
 </td>
 </tr>
 

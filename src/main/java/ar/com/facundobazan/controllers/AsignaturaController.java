@@ -1,9 +1,7 @@
 package ar.com.facundobazan.controllers;
 
 import ar.com.facundobazan.dao.AsignaturaDAO;
-import ar.com.facundobazan.dao.ProfesorDAO;
 import ar.com.facundobazan.models.Asignatura;
-import ar.com.facundobazan.models.Profesor;
 import ar.com.facundobazan.utils.JPAUtils;
 import jakarta.persistence.EntityManager;
 import jakarta.servlet.ServletException;
@@ -63,15 +61,6 @@ public class AsignaturaController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        /*try {
-
-            Asignatura asignatura = (Asignatura) req.getSession().getAttribute("asignatura");
-            asignaturaDAO.create(asignatura);
-        }catch (Exception e){
-
-            resp.sendError(500, e.getMessage());
-        }*/
-
         String asignatura = (String) req.getParameter("asignatura");
         if (asignatura == null) {
 
@@ -82,9 +71,7 @@ public class AsignaturaController extends HttpServlet {
         try (EntityManager em = JPAUtils.getEntity()) {
 
             AsignaturaDAO asignaturaDAO = new AsignaturaDAO(em);
-            ProfesorDAO profesorDAO = new ProfesorDAO(em);
 
-            //Profesor profesor = profesorDAO.getById(11);
             em.getTransaction().begin();
             asignaturaDAO.create(new Asignatura(asignatura));
             em.getTransaction().commit();
@@ -92,6 +79,32 @@ public class AsignaturaController extends HttpServlet {
         } catch (Exception e) {
 
             resp.sendError(500, e.getMessage());
+        }
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        try {
+
+            int id = Integer.parseInt(req.getParameter("asignatura"));
+
+            try (EntityManager em = JPAUtils.getEntity()) {
+
+                AsignaturaDAO asignaturaDAO = new AsignaturaDAO(em);
+
+                em.getTransaction().begin();
+                asignaturaDAO.delete(id);
+                em.getTransaction().commit();
+                resp.sendRedirect("/asignaturas");
+            } catch (Exception e) {
+
+                resp.sendError(500, e.getMessage());
+            }
+
+        } catch (NumberFormatException e) {
+
+            resp.sendError(500, "Parametro incorrecto");
         }
     }
 }
