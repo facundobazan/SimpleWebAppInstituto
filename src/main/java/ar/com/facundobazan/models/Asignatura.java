@@ -5,7 +5,6 @@ import jakarta.transaction.Transactional;
 
 @Entity
 @Table(name = "asignaturas")
-@Transactional
 public class Asignatura {
 
     @Id
@@ -14,7 +13,7 @@ public class Asignatura {
     @Column(name = "nombre", nullable = false, unique = true, length = 100)
     private String asignatura;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_profesor")
     private Profesor profesor;
 

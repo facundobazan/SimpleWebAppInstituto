@@ -6,7 +6,7 @@ import jakarta.persistence.Persistence;
 
 public class JPAUtils {
 
-    private static EntityManagerFactory FACTORY = Persistence.createEntityManagerFactory("h2");
+    private static EntityManagerFactory FACTORY = Persistence.createEntityManagerFactory("mysql");
 
     public static EntityManager getEntity() {
 

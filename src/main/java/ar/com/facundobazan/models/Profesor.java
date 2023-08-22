@@ -8,7 +8,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "profesores")
-@Transactional
 public class Profesor {
 
     @Id
@@ -24,7 +23,7 @@ public class Profesor {
     @Column(name = "telefono", length = 14)
     private String telefono;
 
-    @OneToMany(mappedBy = "profesor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "profesor", fetch = FetchType.LAZY)
     private List<Asignatura> asignaturas;
 
     public Profesor() {
