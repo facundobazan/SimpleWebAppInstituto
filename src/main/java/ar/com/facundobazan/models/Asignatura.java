@@ -13,8 +13,7 @@ public class Asignatura {
     @Column(name = "nombre", nullable = false, unique = true, length = 100)
     private String asignatura;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_profesor")
+    @ManyToOne()
     private Profesor profesor;
 
     public Asignatura() {

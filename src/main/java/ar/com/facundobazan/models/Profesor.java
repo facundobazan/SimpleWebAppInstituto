@@ -13,7 +13,6 @@ public class Profesor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_profesor;
-    //@Column(name = "legajo", nullable = false, unique = true, length = 10)
     @Column(unique = true, nullable = false)
     private int legajo;
     @Column(name = "nombres", nullable = false, length = 100)
@@ -23,7 +22,7 @@ public class Profesor {
     @Column(name = "telefono", length = 14)
     private String telefono;
 
-    @OneToMany(mappedBy = "profesor", fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Asignatura> asignaturas;
 
     public Profesor() {
@@ -32,41 +31,15 @@ public class Profesor {
 
     public Profesor(int legajo, String nombre, String apellido, String telefono) {
 
-        this.legajo = legajo;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.telefono = telefono;
-    }
-
-    public Profesor(int id_profesor, int legajo, String nombre, String apellido, String telefono, List<Asignatura> asignaturas) {
-
-        this.id_profesor = id_profesor;
-        this.legajo = legajo;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.telefono = telefono;
-        this.asignaturas = asignaturas;
-    }
-
-    public Profesor(int legajo, String apellidos, String nombres, String telefono, Asignatura asignatura) {
-
-        this.legajo = legajo;
-        this.apellido = apellidos;
-        this.nombre = nombres;
-        this.telefono = telefono;
-        this.asignaturas.add(asignatura);
+        setLegajo(legajo);
+        setNombre(nombre);
+        setApellido(apellido);
+        setTelefono(telefono);
     }
 
     public int getId_profesor() {
 
         return id_profesor;
-    }
-
-    public Profesor(String nombre, String apellido, String telefono) {
-
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.telefono = telefono;
     }
 
     public void setId_profesor(int id_profesor) {
@@ -117,12 +90,11 @@ public class Profesor {
     public List<Asignatura> getAsignaturas() {
 
         if (this.asignaturas == null) this.asignaturas = new ArrayList<>();
-        return this.asignaturas;
+        return asignaturas;
     }
 
     public void setAsignaturas(List<Asignatura> asignaturas) {
 
-        if (this.asignaturas == null) this.asignaturas = new ArrayList<>();
         this.asignaturas = asignaturas;
     }
 

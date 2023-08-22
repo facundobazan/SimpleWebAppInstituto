@@ -125,6 +125,7 @@ public class PoblarTablas {
     }
 
     private static void persistirProfesores() {
+
         try (EntityManager em = JPAUtils.getEntity()) {
 
             ProfesorDAO profesorDAO = new ProfesorDAO(em);
