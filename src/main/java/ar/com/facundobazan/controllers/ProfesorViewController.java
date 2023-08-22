@@ -15,11 +15,9 @@ import java.io.IOException;
 
 @WebServlet(
         name = "profesor",
-        urlPatterns = {"/profesores/profesor"}
+        urlPatterns = {"/profesor/view"}
 )
 public class ProfesorViewController extends HttpServlet {
-
-    //ProfesorDAO profesorDAO = new ProfesorDAO(JPAUtils.getEntity());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -55,23 +53,31 @@ public class ProfesorViewController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        try(EntityManager em = JPAUtils.getEntity()) {
+        try {
 
-            ProfesorDAO profesorDAO = new ProfesorDAO(em);
-            Profesor profesor = (Profesor) req.getSession().getAttribute("profesor");
+            int id = Integer.parseInt(req.getParameter("id"));
 
-            if (profesor == null){
+            if (id < 1) {
 
-                resp.sendError(400, "No se puedo insertar el registro");
+                resp.sendError(400, "Parametro invalido.");
                 return;
             }
 
-            em.getTransaction().begin();
-            profesorDAO.create(profesor);
-            em.getTransaction().commit();
-        } catch (Exception e) {
+            try (EntityManager em = JPAUtils.getEntity()) {
 
-            resp.sendError(500, e.getMessage());
+                ProfesorDAO profesorDAO = new ProfesorDAO(em);
+                Profesor profesor = profesorDAO.getById(id);
+                HttpSession session = req.getSession();
+                session.setAttribute("profesor", profesor);
+                resp.sendRedirect("/profesores/profesor.jsp");
+            } catch (Exception e) {
+
+                resp.sendError(500, e.getMessage());
+            }
+
+        } catch (NumberFormatException e) {
+
+            resp.sendError(500, "Formato de parametro incorrecto.");
         }
     }
 

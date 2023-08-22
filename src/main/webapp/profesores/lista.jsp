@@ -47,9 +47,20 @@ if(profesores == null){
 <td><%= p.getTelefono() %></td>
 
 <td>
-<a class="bi bi-search text-primary" href="/profesores/profesor?id=<%= p.getId_profesor() %>"></a>
-<a class="bi bi-pencil-fill text-warning" href="#"></a>
-<a class="bi bi-x-circle-fill text-danger" href="#"></a>
+
+<form class="d-inline" action="/profesor/view" method="get">
+<input type="hidden" name="id" value="<%= p.getId_profesor() %>" />
+    <button type="submit" class="btn bi bi-search text-primary"></button>
+</form>
+<form class="d-inline" action="/profesor/edit" method="get">
+<input type="hidden" name="id" value="<%= p.getId_profesor() %>" />
+    <button type="submit" class="btn bi bi-pencil-fill text-warning"></button>
+</form>
+<form class="d-inline" action="/profesor/del" method="post">
+<input type="hidden" name="id" value="<%= p.getId_profesor() %>" />
+    <button type="submit" class="btn bi bi-x-circle-fill text-danger"></button>
+</form>
+
 </td>
 </tr>
 

@@ -20,8 +20,6 @@ import java.util.List;
 )
 public class AsignaturaController extends HttpServlet {
 
-    //AsignaturaDAO asignaturaDAO = new AsignaturaDAO(JPAUtils.getEntity());
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

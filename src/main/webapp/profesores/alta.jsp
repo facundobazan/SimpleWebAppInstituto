@@ -6,8 +6,8 @@
 
 <%@ include file="../share/html-start.jsp" %>
 
-<h1>Profesor</h1>
-<div style="display: flex; flex-flow: row nowrap; justify-content: center; min-height: 100%; padding: 50px;">
+<h1 class="text-center mt-3 mb-3">Profesor</h1>
+<div style="display: flex; flex-flow: row nowrap; justify-content: center; min-height: 100%;">
     
     <%
     List<Asignatura> asignaturas = (List<Asignatura>) request.getSession().getAttribute("asignaturas");
@@ -27,11 +27,11 @@ if(asignaturas == null){
 
     <form class="card pt-2 p-4" action="/profesores" method="post">
 
-        <div class="mb-3">
+        <!--<div class="mb-3">
             <label for="legajo" class="form-label">Legajo</label>
             <input type="number" class="form-control" id="legajo" name="legajo" aria-describedby="legajoHelp" value="">
             <div id="legajoHelp" class="form-text">Ingresa el legajo.</div>
-        </div>
+        </div>-->
 
         <div class="mb-3">
             <label for="apellidos" class="form-label">Apellidos</label>

@@ -23,9 +23,6 @@ import java.util.List;
 )
 public class ProfesorController extends HttpServlet {
 
-    //ProfesorDAO profesorDAO = new ProfesorDAO(JPAUtils.getEntity());
-    //AsignaturaDAO asignaturaDAO = new AsignaturaDAO(JPAUtils.getEntity());
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -38,7 +35,6 @@ public class ProfesorController extends HttpServlet {
 
                 ProfesorDAO profesorDAO = new ProfesorDAO(em);
                 Profesor profesor = profesorDAO.getById(Integer.parseInt(id));
-                //profesor.getAsignaturas().size()
 
                 if (profesor == null) {
 
@@ -59,7 +55,7 @@ public class ProfesorController extends HttpServlet {
             try (EntityManager em = JPAUtils.getEntity()) {
 
                 ProfesorDAO profesorDAO = new ProfesorDAO(em);
-                List<Profesor> profesores = profesorDAO.findByName(name);
+                List<Profesor> profesores = name != null ? profesorDAO.findByName(name) : profesorDAO.getAll();
                 HttpSession session = req.getSession();
                 session.setAttribute("profesores", profesores);
                 resp.sendRedirect("profesores/lista.jsp");
@@ -92,7 +88,7 @@ public class ProfesorController extends HttpServlet {
 
             Asignatura asignatura = asignaturaDAO.getById(id_asignatura);
 
-            if (asignatura != null ) {
+            if (asignatura != null) {
 
                 profesorDAO.create(new Profesor(apellidos, nombre, telefono, asignatura));
             } else {
@@ -163,16 +159,16 @@ public class ProfesorController extends HttpServlet {
             ProfesorDAO profesorDAO = new ProfesorDAO(em);
             em.getTransaction().begin();
 
-            try{
+            try {
 
                 int id = Integer.parseInt(req.getParameter("id"));
 
-                if(id<1) {
+                if (id < 1) {
 
                     resp.sendError(400, "Objeto no encontrado.");
                     return;
                 }
-            } catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
 
                 resp.sendError(400, "Parametro incorrecto.");
             }
