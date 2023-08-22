@@ -1,7 +1,6 @@
 package ar.com.facundobazan.models;
 
 import jakarta.persistence.*;
-import jakarta.transaction.Transactional;
 
 @Entity
 @Table(name = "asignaturas")

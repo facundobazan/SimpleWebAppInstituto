@@ -1,6 +1,8 @@
 package ar.com.facundobazan.controllers;
 
+import ar.com.facundobazan.dao.AsignaturaDAO;
 import ar.com.facundobazan.dao.ProfesorDAO;
+import ar.com.facundobazan.models.Asignatura;
 import ar.com.facundobazan.models.Profesor;
 import ar.com.facundobazan.utils.JPAUtils;
 import jakarta.persistence.EntityManager;
@@ -12,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(
@@ -78,15 +81,28 @@ public class ProfesorController extends HttpServlet {
         try (EntityManager em = JPAUtils.getEntity()) {
 
             ProfesorDAO profesorDAO = new ProfesorDAO(em);
+            AsignaturaDAO asignaturaDAO = new AsignaturaDAO(em);
             em.getTransaction().begin();
 
-            String legajo = req.getParameter("legajo");
+            //String legajo = req.getParameter("legajo");
             String apellidos = req.getParameter("apellidos");
             String nombre = req.getParameter("nombres");
             String telefono = req.getParameter("telefono");
+            int id_asignatura = Integer.parseInt(req.getParameter("asignatura"));
 
-            profesorDAO.create(new Profesor(Integer.parseInt(legajo), apellidos, nombre, telefono));
+            Asignatura asignatura = asignaturaDAO.getById(id_asignatura);
+
+            if (asignatura != null ) {
+
+                profesorDAO.create(new Profesor(apellidos, nombre, telefono, asignatura));
+            } else {
+
+                resp.sendError(400, "La asignatura seleccionada no existe.");
+            }
+
             em.getTransaction().commit();
+
+            resp.sendRedirect("/profesores");
         } catch (Exception e) {
 
             resp.sendError(500, e.getMessage());

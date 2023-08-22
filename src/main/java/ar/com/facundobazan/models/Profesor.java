@@ -1,7 +1,6 @@
 package ar.com.facundobazan.models;
 
 import jakarta.persistence.*;
-import jakarta.transaction.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +13,7 @@ public class Profesor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_profesor;
     @Column(unique = true, nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int legajo;
     @Column(name = "nombres", nullable = false, length = 100)
     private String nombre;
@@ -35,6 +35,14 @@ public class Profesor {
         setNombre(nombre);
         setApellido(apellido);
         setTelefono(telefono);
+    }
+
+    public Profesor(String apellidos, String nombre, String telefono, Asignatura asignatura) {
+
+        setApellido(apellidos);
+        setNombre(nombre);
+        setTelefono(telefono);
+        addAsignatura(asignatura);
     }
 
     public int getId_profesor() {
