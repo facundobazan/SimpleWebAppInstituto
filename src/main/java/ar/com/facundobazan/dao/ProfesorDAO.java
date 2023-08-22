@@ -20,12 +20,9 @@ public class ProfesorDAO implements Crud<Profesor> {
     }
 
     @Override
-    public int create(Profesor profesor) {
+    public void create(Profesor profesor) {
 
-        this.entityManager.getTransaction().begin();
         this.MANAGER.persist(profesor);
-        this.entityManager.getTransaction().commit();
-        return 0;
     }
 
     @Override
@@ -42,18 +39,16 @@ public class ProfesorDAO implements Crud<Profesor> {
     }
 
     @Override
-    public Boolean update(Profesor profesor) {
+    public void update(Profesor profesor) {
 
         this.MANAGER.merge(profesor);
-        return null;
     }
 
     @Override
-    public Boolean delete(int id) {
+    public void delete(int id) {
 
         Profesor profesor = this.MANAGER.find(Profesor.class, id);
         this.MANAGER.remove(profesor);
-        return null;
     }
 
     public List<Profesor> findByName(String name) {

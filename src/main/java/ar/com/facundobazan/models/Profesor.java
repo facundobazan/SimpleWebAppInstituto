@@ -1,12 +1,14 @@
 package ar.com.facundobazan.models;
 
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "profesores")
+@Transactional
 public class Profesor {
 
     @Id
@@ -22,7 +24,7 @@ public class Profesor {
     @Column(name = "telefono", length = 14)
     private String telefono;
 
-    @OneToMany(mappedBy = "profesor", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "profesor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Asignatura> asignaturas;
 
     public Profesor() {
@@ -115,6 +117,7 @@ public class Profesor {
 
     public List<Asignatura> getAsignaturas() {
 
+        if (this.asignaturas == null) this.asignaturas = new ArrayList<>();
         return this.asignaturas;
     }
 

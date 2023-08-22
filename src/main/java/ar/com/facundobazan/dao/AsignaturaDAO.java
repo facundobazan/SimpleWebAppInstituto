@@ -18,10 +18,9 @@ public class AsignaturaDAO implements Crud<Asignatura> {
     }
 
     @Override
-    public int create(Asignatura asignatura) {
+    public void create(Asignatura asignatura) {
 
         this.MANAGER.persist(asignatura);
-        return 0;
     }
 
     @Override
@@ -38,18 +37,16 @@ public class AsignaturaDAO implements Crud<Asignatura> {
     }
 
     @Override
-    public Boolean update(Asignatura asignatura) {
+    public void update(Asignatura asignatura) {
 
         this.MANAGER.merge(asignatura);
-        return null;
     }
 
     @Override
-    public Boolean delete(int id) {
+    public void delete(int id) {
 
         Asignatura asignatura = this.MANAGER.find(Asignatura.class, id);
         this.MANAGER.remove(asignatura);
-        return null;
     }
 
     public List<Asignatura> findByName(String name) {

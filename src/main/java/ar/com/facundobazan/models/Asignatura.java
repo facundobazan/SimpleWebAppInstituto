@@ -1,9 +1,11 @@
 package ar.com.facundobazan.models;
 
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 
 @Entity
 @Table(name = "asignaturas")
+@Transactional
 public class Asignatura {
 
     @Id
@@ -12,7 +14,7 @@ public class Asignatura {
     @Column(name = "nombre", nullable = false, unique = true, length = 100)
     private String asignatura;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_profesor")
     private Profesor profesor;
 

@@ -1,6 +1,7 @@
 <%@page import="ar.com.facundobazan.models.Asignatura" %>
 <%@page import="ar.com.facundobazan.dao.AsignaturaDAO" %>
 <%@page import="ar.com.facundobazan.utils.JPAUtils" %>
+<%@page import="jakarta.persistence.EntityManager" %>
 <%@page import="java.util.List" %>
 
 <%@ include file="../share/html-start.jsp" %>
@@ -11,10 +12,17 @@
     <%
     List<Asignatura> asignaturas = (List<Asignatura>) request.getSession().getAttribute("asignaturas");
 
-    if(asignaturas == null){
-        AsignaturaDAO asignaturaDAO = new AsignaturaDAO(JPAUtils.getEntity());
-        asignaturas = asignaturaDAO.getAll();
+if(asignaturas == null){
+
+    try (EntityManager em = JPAUtils.getEntity()){
+
+    AsignaturaDAO asignaturaDAO = new AsignaturaDAO(em);
+    asignaturas = asignaturaDAO.getAll();
+    } catch (Exception e){
+
+      throw new RuntimeException(e.getMessage());
     }
+}
     %>
 
     <form class="card pt-2 p-4" action="/profesores" method="post">

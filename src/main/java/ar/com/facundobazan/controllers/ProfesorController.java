@@ -1,6 +1,5 @@
 package ar.com.facundobazan.controllers;
 
-import ar.com.facundobazan.dao.AsignaturaDAO;
 import ar.com.facundobazan.dao.ProfesorDAO;
 import ar.com.facundobazan.models.Profesor;
 import ar.com.facundobazan.utils.JPAUtils;
@@ -21,8 +20,8 @@ import java.util.List;
 )
 public class ProfesorController extends HttpServlet {
 
-    ProfesorDAO profesorDAO = new ProfesorDAO(JPAUtils.getEntity());
-    AsignaturaDAO asignaturaDAO = new AsignaturaDAO(JPAUtils.getEntity());
+    //ProfesorDAO profesorDAO = new ProfesorDAO(JPAUtils.getEntity());
+    //AsignaturaDAO asignaturaDAO = new AsignaturaDAO(JPAUtils.getEntity());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,9 +31,11 @@ public class ProfesorController extends HttpServlet {
 
         if (id != null) {
 
-            try {
+            try (EntityManager em = JPAUtils.getEntity()) {
 
+                ProfesorDAO profesorDAO = new ProfesorDAO(em);
                 Profesor profesor = profesorDAO.getById(Integer.parseInt(id));
+                //profesor.getAsignaturas().size()
 
                 if (profesor == null) {
 
@@ -45,39 +46,63 @@ public class ProfesorController extends HttpServlet {
                 HttpSession session = req.getSession();
                 resp.sendRedirect("profesores/profesor.jsp");
                 session.setAttribute("profesor", profesor);
-            } catch (NumberFormatException e) {
+            } catch (Exception e) {
 
                 resp.sendError(400, "Parametro de busqueda erroneo");
             }
 
         } else {
 
-            List<Profesor> profesores = profesorDAO.findByName(name);
-            HttpSession session = req.getSession();
-            session.setAttribute("profesores", profesores);
-            resp.sendRedirect("profesores/lista.jsp");
+            try (EntityManager em = JPAUtils.getEntity()) {
+
+                ProfesorDAO profesorDAO = new ProfesorDAO(em);
+                List<Profesor> profesores = profesorDAO.findByName(name);
+                HttpSession session = req.getSession();
+                session.setAttribute("profesores", profesores);
+                resp.sendRedirect("profesores/lista.jsp");
+            } catch (Exception e) {
+
+                resp.sendError(500, e.getMessage());
+            }
+
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String legajo = req.getParameter("legajo");
-        String apellidos = req.getParameter("apellidos");
-        String nombre = req.getParameter("nombres");
-        String telefono = req.getParameter("telefono");
+        //EntityManager em = JPAUtils.getEntity();
+        //em.close();
+        //AsignaturaDAO asignaturaDAO = new AsignaturaDAO(em);
+
+        try (EntityManager em = JPAUtils.getEntity()) {
+
+            ProfesorDAO profesorDAO = new ProfesorDAO(em);
+            em.getTransaction().begin();
+
+            String legajo = req.getParameter("legajo");
+            String apellidos = req.getParameter("apellidos");
+            String nombre = req.getParameter("nombres");
+            String telefono = req.getParameter("telefono");
+
+            profesorDAO.create(new Profesor(Integer.parseInt(legajo), apellidos, nombre, telefono));
+            em.getTransaction().commit();
+        } catch (Exception e) {
+
+            resp.sendError(500, e.getMessage());
+        }
+
+
         //String asignatura = req.getParameter("asignatura");
 
-        try {
-
-            Profesor profesor = new Profesor();
-
+        /*try {
+            
             EntityManager em = JPAUtils.getEntity();
             em.getTransaction().begin();
-            /*profesor.setLegajo(Integer.parseInt(legajo));
+            *//*profesor.setLegajo(Integer.parseInt(legajo));
             profesor.setApellido(apellidos);
             profesor.setNombre(nombre);
-            profesor.setTelefono(telefono);*/
+            profesor.setTelefono(telefono);*//*
             //profesor.addAsignatura(asignaturaDAO.getById(Integer.parseInt(asignatura)));
 
             profesorDAO.create(new Profesor(Integer.parseInt(legajo), apellidos, nombre, telefono));
@@ -90,7 +115,7 @@ public class ProfesorController extends HttpServlet {
         }
         finally {
 
-        }
+        }*/
 
 
 
@@ -117,20 +142,32 @@ public class ProfesorController extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        try {
+        try (EntityManager em = JPAUtils.getEntity()) {
 
-            int id = Integer.parseInt(req.getParameter("id"));
-            profesorDAO.delete(id);
+            ProfesorDAO profesorDAO = new ProfesorDAO(em);
+            em.getTransaction().begin();
 
-            if (id < 1) {
+            try{
 
-                resp.sendError(400, "Objeto no encontrado");
-                return;
+                int id = Integer.parseInt(req.getParameter("id"));
+
+                if(id<1) {
+
+                    resp.sendError(400, "Objeto no encontrado.");
+                    return;
+                }
+            } catch (NumberFormatException e){
+
+                resp.sendError(400, "Parametro incorrecto.");
             }
-            resp.sendRedirect("/");
-        } catch (NumberFormatException e) {
 
-            resp.sendError(400, "Formato de parametro incorrecto");
+            profesorDAO.delete(Integer.parseInt(req.getParameter("id")));
+            em.getTransaction().commit();
+
+            resp.sendRedirect("/");
+        } catch (Exception e) {
+
+            resp.sendError(400, e.getMessage());
         }
     }
 }

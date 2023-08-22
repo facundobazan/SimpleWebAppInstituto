@@ -1,6 +1,7 @@
 <%@page import="ar.com.facundobazan.models.Profesor" %>
 <%@page import="ar.com.facundobazan.dao.ProfesorDAO" %>
 <%@page import="ar.com.facundobazan.utils.JPAUtils" %>
+<%@page import="jakarta.persistence.EntityManager" %>
 <%@page import="java.util.List" %>
 
 <%@ include file="../share/html-start.jsp" %>
@@ -26,7 +27,14 @@ List<Profesor> profesores = (List<Profesor>) request.getSession().getAttribute("
 
 if(profesores == null){
 
-    profesores = new ProfesorDAO(JPAUtils.getEntity()).getAll();
+    try (EntityManager em = JPAUtils.getEntity()){
+
+    ProfesorDAO profesorDAO = new ProfesorDAO(em);
+    profesores = profesorDAO.getAll();
+    } catch (Exception e){
+
+      throw new RuntimeException(e.getMessage());
+    }
 }
     
     for (Profesor p : profesores) {

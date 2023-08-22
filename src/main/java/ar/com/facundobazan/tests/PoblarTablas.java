@@ -31,13 +31,7 @@ public class PoblarTablas {
         profesor7.addAsignatura(new Asignatura(profesor7, "Biología"));
         profesor8.addAsignatura(new Asignatura(profesor8, "Geografía"));
         profesor9.addAsignatura(new Asignatura(profesor9, "Literatura"));
-        profesor10.addAsignatura(new Asignatura(profesor10, "Pisicología"));
-*/
-        EntityManager em = JPAUtils.getEntity();
-        AsignaturaDAO asignaturaDAO = new AsignaturaDAO(em);
-        ProfesorDAO profesorDAO = new ProfesorDAO(em);
-
-        em.getTransaction().begin();
+        profesor10.addAsignatura(new Asignatura(profesor10, "Pisicología"));*/
 
         Asignatura asignatura1 = new Asignatura(profesor1, "Educación Física");
         Asignatura asignatura2 = new Asignatura(profesor2, "Inglés");
@@ -49,19 +43,6 @@ public class PoblarTablas {
         Asignatura asignatura8 = new Asignatura(profesor8, "Geografía");
         Asignatura asignatura9 = new Asignatura(profesor9, "Literatura");
         Asignatura asignatura10 = new Asignatura(profesor10, "Pisicología");
-
-        asignaturaDAO.create(asignatura1);
-        asignaturaDAO.create(asignatura2);
-        asignaturaDAO.create(asignatura3);
-        asignaturaDAO.create(asignatura4);
-        asignaturaDAO.create(asignatura5);
-        asignaturaDAO.create(asignatura6);
-        asignaturaDAO.create(asignatura7);
-        asignaturaDAO.create(asignatura8);
-        asignaturaDAO.create(asignatura9);
-        asignaturaDAO.create(asignatura10);
-
-        em.flush();
 
         profesor1.addAsignatura(asignatura1);
         profesor1.addAsignatura(asignatura3);
@@ -84,18 +65,39 @@ public class PoblarTablas {
         profesor10.addAsignatura(asignatura10);
         profesor10.addAsignatura(asignatura7);
 
-        profesorDAO.update(profesor1);
-        profesorDAO.update(profesor2);
-        profesorDAO.update(profesor3);
-        profesorDAO.update(profesor4);
-        profesorDAO.update(profesor5);
-        profesorDAO.update(profesor6);
-        profesorDAO.update(profesor7);
-        profesorDAO.update(profesor8);
-        profesorDAO.update(profesor9);
-        profesorDAO.update(profesor10);
+        try (EntityManager em = JPAUtils.getEntity()){
 
-        em.getTransaction().commit();
-        em.close();
+            AsignaturaDAO asignaturaDAO = new AsignaturaDAO(em);
+            ProfesorDAO profesorDAO = new ProfesorDAO(em);
+
+            em.getTransaction().begin();
+
+            asignaturaDAO.create(asignatura1);
+            asignaturaDAO.create(asignatura2);
+            asignaturaDAO.create(asignatura3);
+            asignaturaDAO.create(asignatura4);
+            asignaturaDAO.create(asignatura5);
+            asignaturaDAO.create(asignatura6);
+            asignaturaDAO.create(asignatura7);
+            asignaturaDAO.create(asignatura8);
+            asignaturaDAO.create(asignatura9);
+            asignaturaDAO.create(asignatura10);
+
+            profesorDAO.update(profesor1);
+            profesorDAO.update(profesor2);
+            profesorDAO.update(profesor3);
+            profesorDAO.update(profesor4);
+            profesorDAO.update(profesor5);
+            profesorDAO.update(profesor6);
+            profesorDAO.update(profesor7);
+            profesorDAO.update(profesor8);
+            profesorDAO.update(profesor9);
+            profesorDAO.update(profesor10);
+
+            em.getTransaction().commit();
+        } catch (Exception e){
+
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }
