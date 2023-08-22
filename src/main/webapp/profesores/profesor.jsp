@@ -4,8 +4,8 @@
 <%@page import="java.util.List" %>
 
 <%@ include file="../share/html-start.jsp" %>
-<h1>Profesores</h1>
-<div style="display: flex; flex-flow: row nowrap; justify-content: center; min-height: 100%; padding: 50px;">
+<h1 class="text-center mt-3 mb-3">Profesores</h1>
+<div style="display: flex; flex-flow: row nowrap; justify-content: center; min-height: 100%;">
     <% Profesor profesor=(Profesor)request.getSession().getAttribute("profesor");%>
 
     <div class="card p-2" style="width: 18rem;">

@@ -1,8 +1,8 @@
 <%@page import="ar.com.facundobazan.models.Asignatura" %>
 
 <%@ include file="../share/html-start.jsp" %>
-<h1>Asignatura</h1>
-<div style="display: flex; flex-flow: row nowrap; justify-content: center; min-height: 100%; padding: 50px;">
+<h1 class="text-center mt-3 mb-3">Asignatura</h1>
+<div style="display: flex; flex-flow: row nowrap; justify-content: center; min-height: 100%;">
     <% Asignatura asignatura=(Asignatura)request.getSession().getAttribute("asignatura");%>
 
     <div class="card p-2 m-2" style="width: 18rem;">

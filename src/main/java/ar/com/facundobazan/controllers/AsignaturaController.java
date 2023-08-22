@@ -1,8 +1,11 @@
 package ar.com.facundobazan.controllers;
 
 import ar.com.facundobazan.dao.AsignaturaDAO;
+import ar.com.facundobazan.dao.ProfesorDAO;
 import ar.com.facundobazan.models.Asignatura;
+import ar.com.facundobazan.models.Profesor;
 import ar.com.facundobazan.utils.JPAUtils;
+import jakarta.persistence.EntityManager;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -19,7 +22,7 @@ import java.util.List;
 )
 public class AsignaturaController extends HttpServlet {
 
-    AsignaturaDAO asignaturaDAO = new AsignaturaDAO(JPAUtils.getEntity());
+    //AsignaturaDAO asignaturaDAO = new AsignaturaDAO(JPAUtils.getEntity());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -29,19 +32,13 @@ public class AsignaturaController extends HttpServlet {
 
         if (id != null) {
 
-            try {
+            try (EntityManager em = JPAUtils.getEntity()) {
 
+                AsignaturaDAO asignaturaDAO = new AsignaturaDAO(em);
                 Asignatura asignatura = asignaturaDAO.getById(Integer.parseInt(id));
-
-                if (asignatura == null) {
-
-                    resp.sendError(400, "Objeto no encontrado");
-                    return;
-                }
-
                 HttpSession session = req.getSession();
-                resp.sendRedirect("asignaturas/asignatura.jsp");
                 session.setAttribute("asignatura", asignatura);
+                resp.sendRedirect("asignaturas/asignatura.jsp");
             } catch (NumberFormatException e) {
 
                 resp.sendError(400, "Parametro de busqueda erroneo");
@@ -49,10 +46,17 @@ public class AsignaturaController extends HttpServlet {
 
         } else {
 
-            List<Asignatura> asignaturas = asignaturaDAO.findByName(name);
-            HttpSession session = req.getSession();
-            session.setAttribute("asignaturas", asignaturas);
-            resp.sendRedirect("asignaturas/lista.jsp");
+            try (EntityManager em = JPAUtils.getEntity()) {
+
+                AsignaturaDAO asignaturaDAO = new AsignaturaDAO(em);
+                List<Asignatura> asignaturas = name != null ? asignaturaDAO.findByName(name) : asignaturaDAO.getAll();
+                HttpSession session = req.getSession();
+                session.setAttribute("asignaturas", asignaturas);
+                resp.sendRedirect("asignaturas/lista.jsp");
+            } catch (NumberFormatException e) {
+
+                resp.sendError(400, "Parametro de busqueda erroneo");
+            }
         }
     }
 
@@ -67,5 +71,27 @@ public class AsignaturaController extends HttpServlet {
 
             resp.sendError(500, e.getMessage());
         }*/
+
+        String asignatura = (String) req.getParameter("asignatura");
+        if (asignatura == null) {
+
+            resp.sendError(400, "No se puedo insertar el registro");
+            return;
+        }
+
+        try (EntityManager em = JPAUtils.getEntity()) {
+
+            AsignaturaDAO asignaturaDAO = new AsignaturaDAO(em);
+            ProfesorDAO profesorDAO = new ProfesorDAO(em);
+
+            //Profesor profesor = profesorDAO.getById(11);
+            em.getTransaction().begin();
+            asignaturaDAO.create(new Asignatura(asignatura));
+            em.getTransaction().commit();
+            resp.sendRedirect("/asignaturas");
+        } catch (Exception e) {
+
+            resp.sendError(500, e.getMessage());
+        }
     }
 }
