@@ -11,21 +11,9 @@
     
     <%
     List<Asignatura> asignaturas = (List<Asignatura>) request.getSession().getAttribute("asignaturas");
-
-if(asignaturas == null){
-
-    try (EntityManager em = JPAUtils.getEntity()){
-
-    AsignaturaDAO asignaturaDAO = new AsignaturaDAO(em);
-    asignaturas = asignaturaDAO.getAll();
-    } catch (Exception e){
-
-      throw new RuntimeException(e.getMessage());
-    }
-}
     %>
 
-    <form class="card pt-2 p-4" action="/profesores" method="post">
+    <form class="card pt-2 p-4" action="/profesor/new" method="post">
 
         <!--<div class="mb-3">
             <label for="legajo" class="form-label">Legajo</label>
@@ -51,15 +39,20 @@ if(asignaturas == null){
             <div id="nameHelp" class="form-text">Ingresa una por nombre de asignatura.</div>
         </div>
 
-        <select class="form-select mb-4" aria-label="Asignaturas combo"  id="asignatura" name="asignatura">
-            <% for (Asignatura a : asignaturas) { %>
-            <option value= <%= a.getId_asignatura() %> > <%= a.getAsignatura() %></option>
-            <%}%>
-        </select>
+        <div class="mb-3">
+            <label for="telefono" class="form-label">Asignatura que dictara</label>
+            <select class="form-select" aria-label="Asignaturas combo"  id="asignatura" name="asignatura">
+                <option value=0> NINGUNA</option>
+                <% for (Asignatura a : asignaturas) { %>
+                <option value= <%= a.getId_asignatura() %> > <%= a.getAsignatura() %></option>
+                <%}%>
+            </select>
+            <div id="nameHelp" class="form-text">Selecciona la asignatura que dictara.</div>
+        </div>
 
         <div class="d-grid d-md-flex justify-content-md-center gap-2">
             <button type="submit" class="btn btn-success">Guardar</button>
-            <a href="/" class="btn btn-danger">Cancelar</a>
+            <a href="/profesores" class="btn btn-danger">Cancelar</a>
         </div>
 
     </form>

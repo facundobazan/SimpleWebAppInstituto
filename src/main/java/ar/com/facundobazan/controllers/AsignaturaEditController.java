@@ -76,7 +76,7 @@ public class AsignaturaEditController extends HttpServlet {
                     return;
                 }
 
-                asignaturaAux.setAsignatura(asignatura);
+                asignaturaAux.setAsignatura(asignatura.toUpperCase());
 
                 em.getTransaction().begin();
                 asignaturaDAO.update(asignaturaAux);

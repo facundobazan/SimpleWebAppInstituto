@@ -22,8 +22,8 @@ public class Profesor {
     @Column(name = "telefono", length = 14)
     private String telefono;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Asignatura> asignaturas;
+    @OneToMany(mappedBy = "profesor", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Asignatura> asignaturas = new ArrayList<>();
 
     public Profesor() {
 
@@ -43,6 +43,13 @@ public class Profesor {
         setNombre(nombre);
         setTelefono(telefono);
         addAsignatura(asignatura);
+    }
+
+    public Profesor(String apellido, String nombre, String telefono) {
+
+        setApellido(apellido);
+        setNombre(nombre);
+        setTelefono(telefono);
     }
 
     public int getId_profesor() {
@@ -97,7 +104,7 @@ public class Profesor {
 
     public List<Asignatura> getAsignaturas() {
 
-        if (this.asignaturas == null) this.asignaturas = new ArrayList<>();
+        //if (this.asignaturas == null) this.asignaturas = new ArrayList<>();
         return asignaturas;
     }
 
@@ -108,7 +115,7 @@ public class Profesor {
 
     public void addAsignatura(Asignatura asignatura) {
 
-        if (this.asignaturas == null) this.asignaturas = new ArrayList<>();
+        //if (this.asignaturas == null) this.asignaturas = new ArrayList<>();
         this.asignaturas.add(asignatura);
     }
 }

@@ -1,5 +1,6 @@
 package ar.com.facundobazan.dao;
 
+import ar.com.facundobazan.models.Asignatura;
 import ar.com.facundobazan.models.Profesor;
 import ar.com.facundobazan.utils.JPAUtils;
 import jakarta.persistence.EntityManager;
@@ -35,6 +36,12 @@ public class ProfesorDAO implements Crud<Profesor> {
     public List<Profesor> getAll() {
 
         String query = "SELECT P FROM Profesor P";
+        return this.MANAGER.createQuery(query, Profesor.class).getResultList();
+    }
+
+    public List<Profesor> getAllUnassigned() {
+
+        String query = "SELECT P FROM Profesor P WHERE asignatura = null";
         return this.MANAGER.createQuery(query, Profesor.class).getResultList();
     }
 

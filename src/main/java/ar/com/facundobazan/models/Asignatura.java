@@ -12,7 +12,8 @@ public class Asignatura {
     @Column(name = "nombre", nullable = false, unique = true, length = 100)
     private String asignatura;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "id_profesor")
     private Profesor profesor;
 
     public Asignatura() {

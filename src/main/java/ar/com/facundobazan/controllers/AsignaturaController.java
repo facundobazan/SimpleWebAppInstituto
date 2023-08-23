@@ -45,7 +45,7 @@ public class AsignaturaController extends HttpServlet {
             try (EntityManager em = JPAUtils.getEntity()) {
 
                 AsignaturaDAO asignaturaDAO = new AsignaturaDAO(em);
-                List<Asignatura> asignaturas = name != null ? asignaturaDAO.findByName(name) : asignaturaDAO.getAll();
+                List<Asignatura> asignaturas = name != null ? asignaturaDAO.findByName(name.toUpperCase()) : asignaturaDAO.getAll();
                 HttpSession session = req.getSession();
                 session.setAttribute("asignaturas", asignaturas);
                 resp.sendRedirect("asignaturas/lista.jsp");
@@ -53,30 +53,6 @@ public class AsignaturaController extends HttpServlet {
 
                 resp.sendError(400, "Parametro de busqueda erroneo");
             }
-        }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        String asignatura = (String) req.getParameter("asignatura");
-        if (asignatura == null) {
-
-            resp.sendError(400, "No se puedo insertar el registro");
-            return;
-        }
-
-        try (EntityManager em = JPAUtils.getEntity()) {
-
-            AsignaturaDAO asignaturaDAO = new AsignaturaDAO(em);
-
-            em.getTransaction().begin();
-            asignaturaDAO.create(new Asignatura(asignatura));
-            em.getTransaction().commit();
-            resp.sendRedirect("/asignaturas");
-        } catch (Exception e) {
-
-            resp.sendError(500, e.getMessage());
         }
     }
 

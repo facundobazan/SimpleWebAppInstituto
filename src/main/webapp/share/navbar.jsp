@@ -21,9 +21,7 @@ Profesores
 <ul class="dropdown-menu">
 <li><a class="dropdown-item" href="/profesores">Listar</a></li>
 <li><a class="dropdown-item" href="/profesores/buscar.jsp">Buscar</a></li>
-<li><a class="dropdown-item" href="/profesores/alta.jsp">Nuevo</a></li>
-<!--<li><a class="dropdown-item" href="/profesores/alta.jsp">Agregar</a></li>
-<li><a class="dropdown-item" href="/profesores/baja.jsp">Borrar</a></li>-->
+<li><a class="dropdown-item" href="/profesor/new">Nuevo</a></li>
 </ul>
 </li>
 <li class="nav-item dropdown">
@@ -34,9 +32,7 @@ Asignaturas
 <ul class="dropdown-menu">
 <li><a class="dropdown-item" href="/asignaturas">Listar</a></li>
 <li><a class="dropdown-item" href="/asignaturas/buscar.jsp">Buscar</a></li>
-<li><a class="dropdown-item" href="/asignaturas/alta.jsp">Nuevo</a></li>
-<!--<li><a class="dropdown-item" href="/asignaturas/alta.jsp">Agregar</a></li>
-<li><a class="dropdown-item" href="/asignaturas/baja.jsp">Borrar</a></li>-->
+<li><a class="dropdown-item" href="/asignatura/new">Nuevo</a></li>
 </ul>
 </li>
 </ul>

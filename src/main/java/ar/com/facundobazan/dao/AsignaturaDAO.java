@@ -36,6 +36,12 @@ public class AsignaturaDAO implements Crud<Asignatura> {
         return this.MANAGER.createQuery(query, Asignatura.class).getResultList();
     }
 
+    public List<Asignatura> getAllUnassigned() {
+
+        String query = "SELECT A FROM Asignatura A WHERE profesor = null";
+        return this.MANAGER.createQuery(query, Asignatura.class).getResultList();
+    }
+
     @Override
     public void update(Asignatura asignatura) {
 
