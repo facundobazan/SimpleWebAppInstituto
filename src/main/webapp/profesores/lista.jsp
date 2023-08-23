@@ -2,6 +2,7 @@
 <%@page import="ar.com.facundobazan.dao.ProfesorDAO" %>
 <%@page import="ar.com.facundobazan.utils.JPAUtils" %>
 <%@page import="jakarta.persistence.EntityManager" %>
+
 <%@page import="java.util.List" %>
 
 <%@ include file="../share/html-start.jsp" %>

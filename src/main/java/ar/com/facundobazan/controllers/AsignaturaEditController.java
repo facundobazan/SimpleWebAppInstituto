@@ -1,7 +1,9 @@
 package ar.com.facundobazan.controllers;
 
 import ar.com.facundobazan.dao.AsignaturaDAO;
+import ar.com.facundobazan.dao.ProfesorDAO;
 import ar.com.facundobazan.models.Asignatura;
+import ar.com.facundobazan.models.Profesor;
 import ar.com.facundobazan.utils.JPAUtils;
 import jakarta.persistence.EntityManager;
 import jakarta.servlet.ServletException;
@@ -12,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(
         name = "asignaturaEdit",
@@ -35,9 +38,12 @@ public class AsignaturaEditController extends HttpServlet {
             try (EntityManager em = JPAUtils.getEntity()) {
 
                 AsignaturaDAO asignaturaDAO = new AsignaturaDAO(em);
+                ProfesorDAO profesorDAO = new ProfesorDAO(em);
                 Asignatura asignatura = asignaturaDAO.getById(id);
+                List<Profesor> profesores = profesorDAO.getAll();
                 HttpSession session = req.getSession();
                 session.setAttribute("asignatura", asignatura);
+                session.setAttribute("profesores", profesores);
                 resp.sendRedirect("/asignaturas/edit.jsp");
             } catch (Exception e) {
 

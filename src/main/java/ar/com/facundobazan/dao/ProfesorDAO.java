@@ -41,7 +41,7 @@ public class ProfesorDAO implements Crud<Profesor> {
 
     public List<Profesor> getAllUnassigned() {
 
-        String query = "SELECT P FROM Profesor P WHERE asignatura = null";
+        String query = "SELECT P FROM Profesor P WHERE P.Asignatura = null";
         return this.MANAGER.createQuery(query, Profesor.class).getResultList();
     }
 

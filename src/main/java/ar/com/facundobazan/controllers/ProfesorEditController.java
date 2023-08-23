@@ -56,13 +56,13 @@ public class ProfesorEditController extends HttpServlet {
         try {
 
             int id = Integer.parseInt(req.getParameter("id"));
-            //int legajo = Integer.parseInt(req.getParameter("legajo"));
+            int legajo = Integer.parseInt(req.getParameter("legajo"));
             String apellidos = req.getParameter("apellidos");
             String nombres = req.getParameter("nombres");
             String telefono = req.getParameter("telefono");
 
 
-            if (id < 1 || /*legajo < 1  || */apellidos == null || nombres == null || telefono == null) {
+            if (id < 1 || legajo < 1 || apellidos.isBlank() || nombres.isBlank() || telefono.isBlank()) {
 
                 resp.sendError(400, "Parametros invalidos.");
                 return;
@@ -79,6 +79,7 @@ public class ProfesorEditController extends HttpServlet {
                     return;
                 }
 
+                profesor.setLegajo(legajo);
                 profesor.setApellido(apellidos.toUpperCase());
                 profesor.setNombre(nombres.toUpperCase());
                 profesor.setTelefono(telefono.toUpperCase());

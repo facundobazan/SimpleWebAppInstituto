@@ -46,6 +46,7 @@ public class ProfesorNewController extends HttpServlet {
         try {
 
             int asignaturaId = Integer.parseInt(req.getParameter("asignatura"));
+            int legajo = Integer.parseInt(req.getParameter("legajo"));
             String apellidos = req.getParameter("apellidos");
             String nombre = req.getParameter("nombres");
             String telefono = req.getParameter("telefono");
@@ -58,7 +59,7 @@ public class ProfesorNewController extends HttpServlet {
 
             try (EntityManager em = JPAUtils.getEntity()) {
 
-                Profesor profesor = new Profesor(apellidos, nombre, telefono);
+                Profesor profesor = new Profesor(legajo, apellidos, nombre, telefono);
 
                 if (asignaturaId != 0) {
 

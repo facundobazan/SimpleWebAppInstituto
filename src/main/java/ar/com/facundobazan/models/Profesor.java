@@ -12,8 +12,7 @@ public class Profesor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_profesor;
-    @Column(unique = true)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "legajo", unique = true)
     private int legajo;
     @Column(name = "nombres", nullable = false, length = 100)
     private String nombre;
@@ -22,7 +21,7 @@ public class Profesor {
     @Column(name = "telefono", length = 14)
     private String telefono;
 
-    @OneToMany(mappedBy = "profesor", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "profesor", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Asignatura> asignaturas = new ArrayList<>();
 
     public Profesor() {

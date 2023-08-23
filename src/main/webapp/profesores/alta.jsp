@@ -15,11 +15,11 @@
 
     <form class="card pt-2 p-4" action="/profesor/new" method="post">
 
-        <!--<div class="mb-3">
+        <div class="mb-3">
             <label for="legajo" class="form-label">Legajo</label>
-            <input type="number" class="form-control" id="legajo" name="legajo" aria-describedby="legajoHelp" value="">
+            <input type="number" class="form-control" id="legajo" name="legajo" aria-describedby="legajoHelp" value="1" min="1" max="999" >
             <div id="legajoHelp" class="form-text">Ingresa el legajo.</div>
-        </div>-->
+        </div>
 
         <div class="mb-3">
             <label for="apellidos" class="form-label">Apellidos</label>

@@ -50,16 +50,16 @@ public class PoblarTablas {
 
     private static void poblarListaProfesores() {
 
-        poblarProfesores(1, "MARCOS GABRIEL", "SALVATIERRA", "+5493815098217");
-        poblarProfesores(2, "FEDERICO", "RODRIGUEZ", "+5493816473641");
-        poblarProfesores(3, "MATIAS", "GONZALEZ", "+5493811217422");
-        poblarProfesores(4, "MARIA LAURA", "FERNANDEZ", "+5493813181418");
-        poblarProfesores(5, "FABIANA", "MARTINEZ", "+5493811283280");
-        poblarProfesores(6, "JUAN", "FLORES", "+5493813226437");
-        poblarProfesores(7, "CRISTINA", "SERRANO", "+5493815812125");
-        poblarProfesores(8, "MORENA SOLEDAD", "RUIZ", "+5493813210320");
-        poblarProfesores(9, "ARIEL", "AGUIRRE", "+5493814343357");
-        poblarProfesores(10, "MAXIMILIANO EMILIO", "FLORES", "+5493813528390");
+        poblarProfesores(1000, "MARCOS GABRIEL", "SALVATIERRA", "+5493815098217");
+        poblarProfesores(1001, "FEDERICO", "RODRIGUEZ", "+5493816473641");
+        poblarProfesores(1002, "MATIAS", "GONZALEZ", "+5493811217422");
+        poblarProfesores(1003, "MARIA LAURA", "FERNANDEZ", "+5493813181418");
+        poblarProfesores(1004, "FABIANA", "MARTINEZ", "+5493811283280");
+        poblarProfesores(1005, "JUAN", "FLORES", "+5493813226437");
+        poblarProfesores(1006, "CRISTINA", "SERRANO", "+5493815812125");
+        poblarProfesores(1007, "MORENA SOLEDAD", "RUIZ", "+5493813210320");
+        poblarProfesores(1008, "ARIEL", "AGUIRRE", "+5493814343357");
+        poblarProfesores(1009, "MAXIMILIANO EMILIO", "FLORES", "+5493813528390");
     }
 
     private static void poblarProfesores(int legajo, String nombre, String apellido, String telefono) {

@@ -15,9 +15,9 @@ Profesor profesor = (Profesor) request.getSession().getAttribute("profesor");
     <input type="hidden" name="id" value="<%= profesor.getId_profesor() %>" />
 
                 <div class="mb-3 mt-3">
-                    <label for="legajo" class="form-label">Legajo: #<%= profesor.getLegajo() %></label>
-                    <!--<input type="number" class="form-control" id="legajo" name="legajo" aria-describedby="legajoHelp" value="<%= profesor.getLegajo() %>" readonly>
-                    <div id="legajoHelp" class="form-text">Ingresa el legajo.</div>-->
+                    <label for="legajo" class="form-label">Legajo</label>
+                    <input type="number" class="form-control" id="legajo" name="legajo" aria-describedby="legajoHelp" value="<%= profesor.getLegajo() %>" min="1" max="9999" >
+                    <div id="legajoHelp" class="form-text">Ingresa el legajo.</div>
                 </div>
 
                 <div class="mb-3">
