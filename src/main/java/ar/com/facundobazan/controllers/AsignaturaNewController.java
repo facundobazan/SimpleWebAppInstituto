@@ -49,9 +49,9 @@ public class AsignaturaNewController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String asignatura = req.getParameter("asignatura");
-        int id = Integer.parseInt(req.getParameter("profesor"));
+        int id_profesor = Integer.parseInt(req.getParameter("profesor"));
 
-        if (asignatura == null || id < 1) {
+        if (asignatura == null) {
 
             resp.sendError(500, "Los datos ingresados son inválidos");
             return;
@@ -59,21 +59,27 @@ public class AsignaturaNewController extends HttpServlet {
 
         try (EntityManager em = JPAUtils.getEntity()) {
 
-            AsignaturaDAO asignaturaDAO = new AsignaturaDAO(em);
-            ProfesorDAO profesorDAO = new ProfesorDAO(em);
+            Asignatura asignaturaAux = new Asignatura(asignatura.toUpperCase());
 
-            em.getTransaction().begin();
-            Profesor profesor = profesorDAO.getById(id);
-            if (profesor == null) {
+            if (id_profesor != 0){
 
-                resp.sendError(400, "No se ha encontrado el profesor en la base de datos");
-                return;
+                ProfesorDAO profesorDAO = new ProfesorDAO(em);
+                Profesor profesorAux = profesorDAO.getById(id_profesor);
+
+                if (profesorAux != null) {
+
+                    asignaturaAux.setProfesor(profesorAux);
+                }
             }
-            asignaturaDAO.create(new Asignatura(profesor, asignatura.toUpperCase()));
+
+            AsignaturaDAO asignaturaDAO = new AsignaturaDAO(em);
+            em.getTransaction().begin();
+            asignaturaDAO.create(asignaturaAux);
             em.getTransaction().commit();
             resp.sendRedirect("/asignaturas");
         } catch (Exception e) {
 
+            System.out.println(e.getMessage());
             resp.sendError(500, e.getMessage());
         }
     }
