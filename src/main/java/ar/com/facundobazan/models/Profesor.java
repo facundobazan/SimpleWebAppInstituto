@@ -12,8 +12,8 @@ public class Profesor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_profesor;
-    @Column(unique = true, nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int legajo;
     @Column(name = "nombres", nullable = false, length = 100)
     private String nombre;

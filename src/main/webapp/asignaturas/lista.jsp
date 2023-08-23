@@ -45,7 +45,7 @@ for (Asignatura a : asignaturas) {
 
 <td>
 
-<form class="d-inline" action="/asignatura/view" method="get">
+<form class="d-inline" action="/asignatura" method="get">
 <input type="hidden" name="id" value="<%= a.getId_asignatura() %>" />
     <button type="submit" class="btn bi bi-search text-primary"></button>
 </form>

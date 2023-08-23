@@ -79,7 +79,7 @@ public class ProfesorNewController extends HttpServlet {
 
                     ProfesorDAO profesorDAO = new ProfesorDAO(em);
                     em.getTransaction().begin();
-                    profesorDAO.create(new Profesor(apellidos, nombre, telefono));
+                    profesorDAO.create(profesor);
                     em.getTransaction().commit();
                 }
 

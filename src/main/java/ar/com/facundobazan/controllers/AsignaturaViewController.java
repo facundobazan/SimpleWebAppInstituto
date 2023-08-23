@@ -15,7 +15,7 @@ import java.io.IOException;
 
 @WebServlet(
         name = "asignaturaView",
-        urlPatterns = {"/asignatura/view"}
+        urlPatterns = {"/asignatura"}
 )
 public class AsignaturaViewController extends HttpServlet {
 
@@ -25,12 +25,6 @@ public class AsignaturaViewController extends HttpServlet {
         try {
 
             int id = Integer.parseInt(req.getParameter("id"));
-
-            if (id < 1) {
-
-                resp.sendError(400, "Parametro invalido.");
-                return;
-            }
 
             try (EntityManager em = JPAUtils.getEntity()) {
 
@@ -46,6 +40,7 @@ public class AsignaturaViewController extends HttpServlet {
 
         } catch (NumberFormatException e) {
 
+            System.out.println(e.getMessage());
             resp.sendError(500, "Formato de parametro incorrecto.");
         }
     }
