@@ -62,6 +62,8 @@ public class AsignaturaEditController extends HttpServlet {
         try {
 
             int id = Integer.parseInt(req.getParameter("id"));
+            int id_profesor = Integer.parseInt(req.getParameter("profesor"));
+
             String asignatura = req.getParameter("asignatura");
 
 
@@ -78,11 +80,22 @@ public class AsignaturaEditController extends HttpServlet {
 
                 if (asignaturaAux == null) {
 
-                    resp.sendError(400, "No se encontro la asignatura");
+                    resp.sendError(400, "No se encontro la asignatura.");
                     return;
                 }
 
                 asignaturaAux.setAsignatura(asignatura.toUpperCase());
+
+                if (id_profesor == 0) {
+
+                    asignaturaAux.setProfesor(null);
+                } else {
+
+                    ProfesorDAO profesorDAO = new ProfesorDAO(em);
+                    Profesor profesorAux = profesorDAO.getById(id_profesor);
+
+                    if (profesorAux != null) asignaturaAux.setProfesor(profesorAux);
+                }
 
                 em.getTransaction().begin();
                 asignaturaDAO.update(asignaturaAux);
