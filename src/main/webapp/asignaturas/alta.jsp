@@ -21,6 +21,7 @@ List<Profesor> profesores = (List<Profesor>) request.getSession().getAttribute("
         <div class="mb-2">
             <label for="profesor" class="form-label">Profesor</label>
             <select class="form-select mb-3" aria-label="Profesores combo"  id="profesor" name="profesor">
+                <option value=0>SIN ASIGNAR</option>
                 <% for (Profesor profesor : profesores) { %>
                 <option value= <%= profesor.getId_profesor() %> > <%= profesor.getApellido() %>, <%= profesor.getNombre() %></option>
                 <%}%>
