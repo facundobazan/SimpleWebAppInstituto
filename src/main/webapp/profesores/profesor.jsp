@@ -15,10 +15,20 @@
           <p class="card-text mb-1">ID: <%= profesor.getId_profesor() %></p>
           <p class="card-text mb-1">Legajo: <%= profesor.getLegajo() %></p>
           <p class="card-text mb-1">Telefono: <%= profesor.getTelefono() %></p>
+          <p class="card-text mb-2 mt-2">Asignaturas:</p>
+          <ul>
+          <%
+          List<Asignatura> asignaturas = (List<Asignatura>) profesor.getAsignaturas();
 
-          <% List<Asignatura> asignaturas = (List<Asignatura>) profesor.getAsignaturas(); %>
-          <% if ( asignaturas == null ) { %> <p>nulo</p> <% } else { %> <p>no es nulo</p> <% };%>
+          if (asignaturas.isEmpty()) {
 
+            out:print("<li>nulo</li>");
+          } else {
+
+            for (Asignatura asignatura: asignaturas) out:print("<li>" + asignatura.getAsignatura() + "</li>");
+          };
+          %>
+          </ul>
           <a href="/profesores" class="btn btn-primary">Regresar</a>
         </div>
     </div>

@@ -1,6 +1,5 @@
 package ar.com.facundobazan.dao;
 
-import ar.com.facundobazan.models.Asignatura;
 import ar.com.facundobazan.models.Profesor;
 import ar.com.facundobazan.utils.JPAUtils;
 import jakarta.persistence.EntityManager;
