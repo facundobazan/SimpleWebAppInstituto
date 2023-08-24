@@ -21,7 +21,7 @@ public class Profesor {
     @Column(name = "telefono", length = 14)
     private String telefono;
 
-    @OneToMany(mappedBy = "profesor", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "profesor", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<Asignatura> asignaturas = new ArrayList<>();
 
     public Profesor() {

@@ -22,10 +22,10 @@
 
           if (asignaturas.isEmpty()) {
 
-            out:print("<li>nulo</li>");
+            out.print("<li>Sin asignar</li>");
           } else {
 
-            for (Asignatura asignatura: asignaturas) out:print("<li>" + asignatura.getAsignatura() + "</li>");
+            for (Asignatura asignatura: asignaturas) out.print("<li>" + asignatura.getAsignatura() + "</li>");
           };
           %>
           </ul>
